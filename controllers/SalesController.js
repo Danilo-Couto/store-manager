@@ -1,5 +1,5 @@
-// const JOI = require('joi');
 const SalesService = require('../services/SalesService');
+const SalesModel = require('../models/SalesModel');
 
 const getAll = async (_req, res) => {
     const sales = await SalesService.getAll();
@@ -23,23 +23,22 @@ const postSale = async (req, res, next) => {
   return res.status(201).json(newSale);
 };
 
-/* const postSale = async (req, res, next) => {
-  const [...sales] = req.body;
+const putSale = async (req, res, next) => {
+  const { saleId } = req.params;
+  const [{ productId, quantity }] = req.body;
 
-  const saleMap = sales.map((e) => ({
-    productId: e.productId,
-    quantity: e.quantity,
-  }));
+  const findSale = await SalesService.getById(saleId);
 
-  const newSale = await SalesService.postSale(saleMap);
+  if (findSale.error) return next(findSale.error);
 
-  if (newSale.error) return next(newSale.error);
+  const editedSale = await SalesModel.putSale(saleId, productId, quantity);
 
-  return res.status(201).json(newSale);
-}; */
+  return res.status(200).json(editedSale);
+  };
 
 module.exports = {
   getAll,
   getById,
   postSale,
+  putSale,
 };
