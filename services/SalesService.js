@@ -25,12 +25,12 @@ const erro = JOI.object({
 });
 
 const postSale = (soldItems) => {
-  let temErro = null;
+  let hasError = null;
   soldItems.forEach(({ productId, quantity }) => {
     const { error } = erro.validate({ productId, quantity });
-    if (error) temErro = error;
+    if (error) hasError = error;
 });
-  if (temErro) return { temErro };
+  if (hasError) return { hasError };
 
  return SalesModel.postSale(soldItems);
 };
