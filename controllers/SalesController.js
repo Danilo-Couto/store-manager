@@ -18,7 +18,7 @@ const getById = async (req, res, next) => {
 const postSale = async (req, res, next) => {
   const newSale = await SalesService.postSale(req.body);
 
-  if (newSale.temErro) return next(newSale.temErro);
+  if (newSale.hasError) return next(newSale.hasError);
 
   return res.status(201).json(newSale);
 };

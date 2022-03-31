@@ -44,7 +44,6 @@ const postSale = async (soldItems) => {
 };
 
 const putSale = async (saleId, productId, quantity) => {
-
 const query = `UPDATE StoreManager
   .sales_products SET product_id = ?, quantity = ? WHERE sale_id = ?`;
 
