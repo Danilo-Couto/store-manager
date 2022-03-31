@@ -121,7 +121,7 @@ Você deve utilizar o banco MySQL para a gestão de dados. Além disso, a API de
 
 1. Clone o repositório
 
-- `git clone https://github.com/tryber/sd-016-b-store-manager.git`.
+- `git clone git@github.com:tryber/sd-016-b-store-manager.git`.
 - Entre na pasta do repositório que você acabou de clonar:
   - `cd sd-016-b-store-manager`
 
