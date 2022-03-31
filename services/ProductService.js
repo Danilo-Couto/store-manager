@@ -5,7 +5,11 @@ const ProductModel = require('../models/ProductModel');
 const getAll = async () => ProductModel.getAll();
 
 const getById = async (id) => {
+  console.log('service:', id);
+
   const product = await ProductModel.getById(id);
+
+  console.log('service:', product);
 
   if (!product) {
   return {
@@ -22,17 +26,14 @@ const postProduct = async (name, quantity) => {
         .empty()
         .required(),
   }).validate({ name, quantity });
-
   if (error) return ({ error });
 
   const existingProduct = await ProductModel.getByName(name);
-
   if (existingProduct) {
  return ({ error: {
       code: 'alreadyExists', message: 'Product already exists',
     } });
 }
-
   return ProductModel.postProduct(name, quantity);
 };
 

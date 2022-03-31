@@ -1,5 +1,5 @@
-// const JOI = require('joi');
 const ProductService = require('../services/ProductService');
+const ProductModel = require('../models/ProductModel');
 
 const getAll = async (_req, res) => {
     const products = await ProductService.getAll();
@@ -25,8 +25,22 @@ const postProduct = async (req, res, next) => {
   return res.status(201).json(newProduct);
 };
 
+const putProduct = async (req, res, next) => {
+  const { id } = req.params;
+  const { name, quantity } = req.body;
+
+  const findProduct = await ProductService.getById(id);
+
+  if (findProduct.error) return next(findProduct.error);
+
+  const editedProduct = await ProductModel.putProduct(id, name, quantity);
+
+  return res.status(200).json(editedProduct);
+  };
+
 module.exports = {
   getAll,
   getById,
   postProduct,
+  putProduct,
 };

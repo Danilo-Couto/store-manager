@@ -31,10 +31,7 @@ const getById = async (saleId) => {
 };
 
 const postSale = async (soldItems) => {
-  // console.log(soldItems);
-
-  const querySale = 'INSERT INTO StoreManager.sales (date) VALUES (CURRENT_TIMESTAMP());';
-  const [sale] = await connection.execute(querySale);
+  const [sale] = await connection.execute('INSERT INTO StoreManager.sales (id) VALUES (null)');
 
   const querySaleAndProducts = `INSERT INTO StoreManager
     .sales_products (product_id, quantity) VALUES (?,?)`;
