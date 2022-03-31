@@ -15,7 +15,31 @@ const getById = async (req, res, next) => {
   return res.status(200).json(sale);
 };
 
+const postSale = async (req, res, next) => {
+  const newSale = await SalesService.postSale(req.body);
+
+  if (newSale.temErro) return next(newSale.temErro);
+
+  return res.status(201).json(newSale);
+};
+
+/* const postSale = async (req, res, next) => {
+  const [...sales] = req.body;
+
+  const saleMap = sales.map((e) => ({
+    productId: e.productId,
+    quantity: e.quantity,
+  }));
+
+  const newSale = await SalesService.postSale(saleMap);
+
+  if (newSale.error) return next(newSale.error);
+
+  return res.status(201).json(newSale);
+}; */
+
 module.exports = {
   getAll,
   getById,
+  postSale,
 };

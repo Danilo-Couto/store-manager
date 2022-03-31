@@ -30,7 +30,7 @@ describe("03-validations", () => {
 
 					expect(Object.keys(json)).toContain("message");
 					expect(json.message).toEqual('"name" length must be at least 5 characters long');
-				}); 
+				});
 		});
 
 		it("quando cadastrar um produto será validado que o campo quantity está presente no body", async () => {
@@ -76,7 +76,7 @@ describe("03-validations", () => {
 
 					expect(Object.keys(json)).toContain("message");
 					expect(json.message).toEqual('"name" length must be at least 5 characters long');
-				}); 
+				});
 		});
 
 		it("quando atualizar um produto será validado que o campo quantity está presente no body", async () => {
