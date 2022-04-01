@@ -30,12 +30,12 @@ const putProduct = async (req, res, next) => {
   const { name, quantity } = req.body;
 
   const findProduct = await ProductService.getById(id);
-
   if (findProduct.error) return next(findProduct.error);
 
-  const editedProduct = await ProductModel.putProduct(id, name, quantity);
+  const validateEntries = await ProductService.putProduct(name, quantity);
+  if (validateEntries.error) return next(validateEntries.error);
 
-  return res.status(200).json(editedProduct);
+  return res.status(200).json(validateEntries);
 };
 
 const deleteProduct = async (req, res, next) => {

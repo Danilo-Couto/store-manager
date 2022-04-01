@@ -44,13 +44,14 @@ const postSale = async (soldItems) => {
 };
 
 const putSale = async (saleId, productId, quantity) => {
-const query = `UPDATE StoreManager
-  .sales_products SET product_id = ?, quantity = ? WHERE sale_id = ?`;
+  // console.log(saleId, productId, quantity);
+  const query = `UPDATE StoreManager
+    .sales_products SET product_id = ?, quantity = ? WHERE sale_id = ?`;
 
-await connection.execute(query, [productId, quantity, saleId]);
+  await connection.execute(query, [productId, quantity, saleId]);
 
-return { saleId, itemUpdated: [{ productId, quantity }] };
-};
+  return { saleId, itemUpdated: [{ productId, quantity }] };
+  };
 
 module.exports = {
   getAll,

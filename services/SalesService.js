@@ -33,10 +33,20 @@ const postSale = (soldItems) => {
   if (hasError) return { hasError };
 
  return SalesModel.postSale(soldItems);
+ // ajuda do Orlando Dantas
+};
+
+const putSale = async (body) => {
+  console.log('service:', body);
+
+  const { error } = erro.validate(body);
+  if (error) return error;
+  // ajuda do Paulo Sordi
 };
 
 module.exports = {
   getAll,
   getById,
   postSale,
+  putSale,
 };

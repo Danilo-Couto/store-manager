@@ -28,11 +28,12 @@ const putSale = async (req, res, next) => {
   const [{ productId, quantity }] = req.body;
 
   const findSale = await SalesService.getById(saleId);
-
   if (findSale.error) return next(findSale.error);
 
-  const editedSale = await SalesModel.putSale(saleId, productId, quantity);
+  const validateEntries = await SalesService.putSale({ productId, quantity });
+  if (validateEntries) return next(validateEntries);
 
+  const editedSale = await SalesModel.putSale(saleId, productId, quantity);
   return res.status(200).json(editedSale);
   };
 

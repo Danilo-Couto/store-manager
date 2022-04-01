@@ -31,6 +31,19 @@ const postProduct = async (name, quantity) => {
   return ProductModel.postProduct(name, quantity);
 };
 
+const putProduct = async (name, quantity) => {
+  const { error } = JOI.object({
+     name: JOI.string().min(5).not().empty()
+       .required(),
+     quantity: JOI.number().min(1).integer().not()
+       .empty()
+       .required(),
+ }).validate({ name, quantity });
+ if (error) return ({ error });
+
+ return ProductModel.putProduct(name, quantity);
+};
+
 const deleteProduct = async (id) => {
   const existingProduct = await getById(id);
 
@@ -43,5 +56,6 @@ module.exports = {
   getAll,
   getById,
   postProduct,
+  putProduct,
   deleteProduct,
 };
