@@ -24,24 +24,26 @@ const erro = JOI.object({
   .required(),
 });
 
-const postSale = (soldItems) => {
+const postSale = async (body) => {
   let hasError = null;
-  soldItems.forEach(({ productId, quantity }) => {
+
+  body.forEach(({ productId, quantity }) => {
     const { error } = erro.validate({ productId, quantity });
     if (error) hasError = error;
 });
   if (hasError) return { hasError };
 
- return SalesModel.postSale(soldItems);
+  return SalesModel.postSale(body);
  // ajuda do Orlando Dantas
 };
 
-const putSale = async (body) => {
-  console.log('service:', body);
-
+const putSale = async (saleId, body) => {
   const { error } = erro.validate(body);
-  if (error) return error;
-  // ajuda do Paulo Sordi
+  if (error) return { error };
+
+  return SalesModel.putSale(saleId, body);
+
+    // ajuda do Paulo Sordi
 };
 
 module.exports = {
