@@ -9,17 +9,13 @@ const getAll = async (_req, res) => {
 const getById = async (req, res, next) => {
   const { saleId } = req.params;
   const sale = await SalesService.getById(saleId);
-
   if (sale.error) return next(sale.error);
-
   return res.status(200).json(sale);
 };
 
 const postSale = async (req, res, next) => {
   const newSale = await SalesService.postSale(req.body);
-
   if (newSale.hasError) return next(newSale.hasError);
-
   return res.status(201).json(newSale);
 };
 
@@ -40,9 +36,7 @@ const deleteSale = async (req, res, next) => {
   const { saleId } = req.params;
   const findSaleId = await SalesService.getById(saleId); // procura o paramentro
   if (findSaleId.error) return next(findSaleId.error);
-
   await SalesModel.deleteSale(saleId); // direto para Model
-
   return res.status(204).end();
 };
 

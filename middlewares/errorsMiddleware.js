@@ -1,5 +1,5 @@
 module.exports = (err, _req, res, _next) => {
-  console.log('err:', err);
+  // console.log('err:', err);
 
   if (err.isJoi) {
     const newStatus = err.details[0].type.includes('.min') ? 422 : 400;
@@ -12,7 +12,11 @@ module.exports = (err, _req, res, _next) => {
     alreadyExists: 409,
   };
 
-  const status = statusByErrorCode[err.code] || 500;
+  // const status = statusByErrorCode[err.code] || 500;
 
-  res.status(status).json({ message: err.message });
+  if (err.code) return res.status(statusByErrorCode[err.code]).json({ message: err.message });
+
+  console.log({ err });
+
+  return res.status(500).json({ err });
 };

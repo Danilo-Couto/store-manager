@@ -4,6 +4,10 @@ const ProductModel = require('../models/ProductModel');
 const getAll = async () => ProductModel.getAll();
 
 const getById = async (id) => {
+  if (!id) {
+    return {
+      error: { code: 'invalidData', message: 'Product not found' } };
+    }
   const product = await ProductModel.getById(id);
   if (!product) {
   return {

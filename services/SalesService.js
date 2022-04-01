@@ -46,7 +46,6 @@ const putSale = async (saleId, body) => {
 };
 
 const deleteSale = async (saleId) => {
-  console.log('deletesale')
   const existingSale = await getById(saleId); // procura o paramentro
 
   console.log('existingSale:', existingSale);
