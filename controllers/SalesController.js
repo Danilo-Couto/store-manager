@@ -1,4 +1,5 @@
 const SalesService = require('../services/SalesService');
+const SalesModel = require('../models/SalesModel');
 
 const getAll = async (_req, res) => {
     const sales = await SalesService.getAll();
@@ -35,22 +36,20 @@ const putSale = async (req, res, next) => {
   return res.status(200).json(validateEntries);
   };
 
-/* const deleteSale = async (req, res, next) => {
+const deleteSale = async (req, res, next) => {
   const { saleId } = req.params;
+  const findSaleId = await SalesService.getById(saleId); // procura o paramentro
+  if (findSaleId.error) return next(findSaleId.error);
 
-  const findSale = await SalesService.getById(saleId);
-
-  if (findSale.error) return next(findSale.error);
-
-  await SalesService.deleteSale(saleId);
+  await SalesModel.deleteSale(saleId); // direto para Model
 
   return res.status(204).end();
-}; */
+};
 
 module.exports = {
   getAll,
   getById,
   postSale,
   putSale,
-  // deleteSale,
+  deleteSale,
 };

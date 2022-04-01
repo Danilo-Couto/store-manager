@@ -1,5 +1,5 @@
 module.exports = (err, _req, res, _next) => {
-  console.log('err:', err.isJoi, err.message);
+  console.log('err:', err);
 
   if (err.isJoi) {
     const newStatus = err.details[0].type.includes('.min') ? 422 : 400;

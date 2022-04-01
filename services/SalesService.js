@@ -45,18 +45,20 @@ const putSale = async (saleId, body) => {
     // ajuda do Paulo Sordi
 };
 
-/* const deleteSale = async (saleId) => {
-  const existingSale = await getById(saleId);
+const deleteSale = async (saleId) => {
+  console.log('deletesale')
+  const existingSale = await getById(saleId); // procura o paramentro
 
-  if (!existingSale.error) return existingSale;
+  console.log('existingSale:', existingSale);
+  if (existingSale.error) return existingSale.error;
 
   await SalesModel.deleteSale(saleId);
-}; */
+};
 
 module.exports = {
   getAll,
   getById,
   postSale,
   putSale,
-  // deleteSale,
+  deleteSale,
 };
