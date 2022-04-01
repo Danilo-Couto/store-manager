@@ -1,16 +1,10 @@
-// const { formatCep } = require('../3.middlewares/validations');
 const JOI = require('joi');
 const ProductModel = require('../models/ProductModel');
 
 const getAll = async () => ProductModel.getAll();
 
 const getById = async (id) => {
-  console.log('service:', id);
-
   const product = await ProductModel.getById(id);
-
-  console.log('service:', product);
-
   if (!product) {
   return {
     error: { code: 'invalidData', message: 'Product not found' } };
@@ -37,8 +31,17 @@ const postProduct = async (name, quantity) => {
   return ProductModel.postProduct(name, quantity);
 };
 
+const deleteProduct = async (id) => {
+  const existingProduct = await getById(id);
+
+  if (existingProduct.error) return existingProduct;
+
+  await ProductModel.deleteProduct(id);
+};
+
 module.exports = {
   getAll,
   getById,
   postProduct,
+  deleteProduct,
 };

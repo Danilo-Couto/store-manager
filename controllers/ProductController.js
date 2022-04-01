@@ -36,11 +36,24 @@ const putProduct = async (req, res, next) => {
   const editedProduct = await ProductModel.putProduct(id, name, quantity);
 
   return res.status(200).json(editedProduct);
-  };
+};
+
+const deleteProduct = async (req, res, next) => {
+  const { id } = req.params;
+
+  const findProduct = await ProductService.getById(id);
+
+  if (findProduct.error) return next(findProduct.error);
+
+  await ProductModel.deleteProduct(id);
+
+  return res.status(204).end();
+};
 
 module.exports = {
   getAll,
   getById,
   postProduct,
   putProduct,
+  deleteProduct,
 };

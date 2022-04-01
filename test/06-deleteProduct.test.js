@@ -43,7 +43,7 @@ describe("06-deleteProduct", () => {
         .get(`${url}/products/3`)
         .then((response) => {
           const { json } = response;
-  
+
           expect(Object.keys(json)).toContain("message");
           expect(json.message).toEqual("Product not found");
         });
