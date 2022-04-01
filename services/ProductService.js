@@ -31,7 +31,7 @@ const postProduct = async (name, quantity) => {
   return ProductModel.postProduct(name, quantity);
 };
 
-const putProduct = async (name, quantity) => {
+const putProduct = async (id, name, quantity) => {
   const { error } = JOI.object({
      name: JOI.string().min(5).not().empty()
        .required(),
@@ -41,7 +41,7 @@ const putProduct = async (name, quantity) => {
  }).validate({ name, quantity });
  if (error) return ({ error });
 
- return ProductModel.putProduct(name, quantity);
+ return ProductModel.putProduct(id, name, quantity);
 };
 
 const deleteProduct = async (id) => {

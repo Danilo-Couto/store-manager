@@ -42,7 +42,6 @@ const putSale = async (saleId, body) => {
   if (error) return { error };
 
   return SalesModel.putSale(saleId, body);
-
     // ajuda do Paulo Sordi
 };
 

@@ -32,7 +32,8 @@ const putProduct = async (req, res, next) => {
   const findProduct = await ProductService.getById(id);
   if (findProduct.error) return next(findProduct.error);
 
-  const validateEntries = await ProductService.putProduct(name, quantity);
+  const validateEntries = await ProductService.putProduct(id, name, quantity);
+  console.log(validateEntries.error);
   if (validateEntries.error) return next(validateEntries.error);
 
   return res.status(200).json(validateEntries);
