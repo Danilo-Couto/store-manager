@@ -1,10 +1,10 @@
 module.exports = (err, _req, res, _next) => {
-  console.log('err:', err.isJoi);
+  console.log('err:', err.isJoi, err.message);
 
   if (err.isJoi) {
     const newStatus = err.details[0].type.includes('.min') ? 422 : 400;
     return res.status(newStatus)
-    .json({ message: err.details[0].message });
+      .json({ message: err.details[0].message });
   }
 
   const statusByErrorCode = {

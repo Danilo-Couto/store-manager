@@ -35,9 +35,22 @@ const putSale = async (req, res, next) => {
   return res.status(200).json(validateEntries);
   };
 
+/* const deleteSale = async (req, res, next) => {
+  const { saleId } = req.params;
+
+  const findSale = await SalesService.getById(saleId);
+
+  if (findSale.error) return next(findSale.error);
+
+  await SalesService.deleteSale(saleId);
+
+  return res.status(204).end();
+}; */
+
 module.exports = {
   getAll,
   getById,
   postSale,
   putSale,
+  // deleteSale,
 };

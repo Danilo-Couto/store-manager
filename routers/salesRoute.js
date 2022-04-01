@@ -8,6 +8,7 @@ router
 .get('/', rescue(SalesRoute.getAll))
 .get('/:saleId', rescue(SalesRoute.getById))
 .post('/', rescue(SalesRoute.postSale))
-.put('/:saleId', rescue(SalesRoute.putSale));
+.put('/:saleId', rescue(SalesRoute.putSale))
+.delete('/:saleId', rescue(SalesRoute.putSale));
 
 module.exports = router;

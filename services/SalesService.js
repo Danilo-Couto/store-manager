@@ -45,9 +45,18 @@ const putSale = async (saleId, body) => {
     // ajuda do Paulo Sordi
 };
 
+/* const deleteSale = async (saleId) => {
+  const existingSale = await getById(saleId);
+
+  if (!existingSale.error) return existingSale;
+
+  await SalesModel.deleteSale(saleId);
+}; */
+
 module.exports = {
   getAll,
   getById,
   postSale,
   putSale,
+  // deleteSale,
 };

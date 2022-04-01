@@ -31,11 +31,11 @@ const postProduct = async (name, quantity) => {
   return ProductModel.postProduct(name, quantity);
 };
 
-const putProduct = async (id, name, quantity) => {
+const putProduct = (id, name, quantity) => {
   const { error } = JOI.object({
      name: JOI.string().min(5).not().empty()
        .required(),
-     quantity: JOI.number().min(1).integer().not()
+     quantity: JOI.number().integer().min(1).not()
        .empty()
        .required(),
  }).validate({ name, quantity });
