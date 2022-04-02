@@ -1,15 +1,16 @@
 const JOI = require('joi');
 const SalesModel = require('../models/SalesModel');
 
+const invalidData = { error: { code: 'invalidData', message: 'Sale not found' } };
+
 const getAll = async () => SalesModel.getAll();
 
 const getById = async (saleId) => {
-  const sale = await SalesModel.getById(saleId);
+  if (!saleId) return invalidData;
 
-  if (!sale) {
-  return {
-    error: { code: 'invalidData', message: 'Sale not found' } };
-  }
+  const sale = await SalesModel.getById(saleId);
+  if (!sale) return invalidData;
+
   return sale;
 };
 
@@ -38,6 +39,8 @@ const postSale = async (body) => {
 };
 
 const putSale = async (saleId, body) => {
+  if (!saleId) return invalidData;
+
   const { error } = erro.validate(body);
   if (error) return { error };
 
@@ -46,9 +49,9 @@ const putSale = async (saleId, body) => {
 };
 
 const deleteSale = async (saleId) => {
-  const existingSale = await getById(saleId); // procura o paramentro
+  if (!saleId) return invalidData;
 
-  console.log('existingSale:', existingSale);
+  const existingSale = await getById(saleId); // procura o paramentro
   if (existingSale.error) return existingSale.error;
 
   await SalesModel.deleteSale(saleId);

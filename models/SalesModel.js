@@ -14,8 +14,6 @@ ORDER BY saleId AND productId
 };
 
 const getById = async (saleId) => {
-  if (!saleId) return false;
-
   const query = `
   SELECT
   s.date 'date',
@@ -46,8 +44,6 @@ const postSale = async (soldItems) => {
 };
 
 const putSale = async (saleId, body) => {
-  if (!saleId) return false;
-
   const { productId, quantity } = body;
   const query = `UPDATE StoreManager
     .sales_products SET product_id = ?, quantity = ? WHERE sale_id = ?`;
@@ -58,10 +54,9 @@ const putSale = async (saleId, body) => {
   };
 
 const deleteSale = async (saleId) => {
-  if (!saleId) return false;
-
   const query = 'DELETE FROM StoreManager.sales_products WHERE sale_id = ?';
-  await connection.execute(query, [saleId]);
+  const result = await connection.execute(query, [saleId]);
+  return result;
 };
 
 module.exports = {
