@@ -8,12 +8,8 @@ const getAll = async () => {
 };
 
 const getById = async (id) => {
-  if (!id) return false;
-
   const query = 'SELECT * FROM StoreManager.products WHERE id = ?';
   const [result] = await connection.execute(query, [id]);
-  // console.log(result);
-
   if (result.length === 0) return null;
 
   return result[0];
@@ -37,8 +33,6 @@ const postProduct = async (name, quantity) => {
 };
 
 const putProduct = async (id, name, quantity) => {
-  if (!id) return false;
-
 const query = 'UPDATE StoreManager.products SET name = ?, quantity = ? WHERE id = ? ';
 
 await connection.execute(query, [name, quantity, id]);
@@ -47,8 +41,6 @@ return getById(id);
 };
 
 const deleteProduct = async (id) => {
-  if (!id) return false;
-
   const query = 'DELETE FROM StoreManager.products WHERE id = ?';
   const result = await connection.execute(query, [id]);
 

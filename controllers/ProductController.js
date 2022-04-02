@@ -32,10 +32,10 @@ const putProduct = async (req, res, next) => {
   const findProduct = await ProductService.getById(id);
   if (findProduct.error) return next(findProduct.error);
 
-  const validateEntries = await ProductService.putProduct(id, name, quantity);
-  if (validateEntries.error) return next(validateEntries.error);
+  const editedProduct = await ProductService.putProduct(id, name, quantity);
+  if (editedProduct.error) return next(editedProduct.error);
 
-  return res.status(200).json(validateEntries);
+  return res.status(200).json(editedProduct);
 };
 
 const deleteProduct = async (req, res, next) => {

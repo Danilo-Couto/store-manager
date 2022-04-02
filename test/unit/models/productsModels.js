@@ -4,7 +4,7 @@ const connection = require('../../../models/connection');
 const ProductModel = require('../../../models/ProductModel')
 
 // get All
-describe('ModelTest: Busca todos os produtos no BD', () => {
+describe('ModelTest - Products: Busca todos os produtos no BD', () => {
 
   const expectResult = [
   {

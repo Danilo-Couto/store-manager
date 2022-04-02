@@ -40,7 +40,10 @@ const postSale = async (soldItems) => {
   await connection.execute(querySaleAndProducts, [sale.insertId, item.productId, item.quantity]);
   });
 
-  return { id: sale.insertId, itemsSold: soldItems };
+  // console.log('id:', sale.insertId);
+
+  // return { id: sale.insertId, itemsSold: soldItems };
+  return getById(sale.insertId);
 };
 
 const putSale = async (saleId, body) => {

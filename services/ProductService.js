@@ -1,13 +1,13 @@
 const JOI = require('joi');
 const ProductModel = require('../models/ProductModel');
 
+const invalidData = { error: { code: 'invalidData', message: 'Sale not found' } };
+
 const getAll = async () => ProductModel.getAll();
 
 const getById = async (id) => {
-  if (!id) {
-    return {
-      error: { code: 'invalidData', message: 'Product not found' } };
-    }
+  if (!id) return invalidData;
+
   const product = await ProductModel.getById(id);
   if (!product) {
   return {
@@ -36,6 +36,8 @@ const postProduct = async (name, quantity) => {
 };
 
 const putProduct = (id, name, quantity) => {
+  if (!id) return invalidData;
+
   const { error } = JOI.object({
      name: JOI.string().min(5).not().empty()
        .required(),
@@ -49,6 +51,8 @@ const putProduct = (id, name, quantity) => {
 };
 
 const deleteProduct = async (id) => {
+  if (!id) return invalidData;
+
   const existingProduct = await getById(id);
 
   if (existingProduct.error) return existingProduct;
