@@ -9,8 +9,8 @@ FROM StoreManager.sales_products AS sp
 INNER JOIN StoreManager.sales AS s ON sp.sale_id = s.id
 ORDER BY saleId AND productId
 `;
-    const [sale] = await connection.execute(query);
-    return sale;
+  const [sale] = await connection.execute(query);
+  return sale;
 };
 
 const getById = async (saleId) => {
@@ -36,7 +36,7 @@ const postSale = async (soldItems) => {
   const [sale] = await connection.execute('INSERT INTO StoreManager.sales (id) VALUES (null)');
 
   const querySaleAndProducts = `INSERT INTO StoreManager
-    .sales_products (product_id, quantity) VALUES (?,?)`;
+    .sales_products (sale_id, product_id, quantity) VALUES (?,?,?)`;
 
   soldItems.forEach(async (item) => {
   await connection.execute(querySaleAndProducts, [sale.insertId, item.productId, item.quantity]);
