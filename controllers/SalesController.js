@@ -23,9 +23,6 @@ const putSale = async (req, res, next) => {
   const { saleId } = req.params;
   const [{ productId, quantity }] = req.body;
 
-  const findSale = await SalesService.getById(saleId);
-  if (findSale.error) return next(findSale.error);
-
   const editedSale = await SalesService.putSale(saleId, { productId, quantity });
   if (editedSale.error) return next(editedSale.error);
 

@@ -44,6 +44,9 @@ const putSale = async (saleId, body) => {
   const { error } = erro.validate(body);
   if (error) return { error };
 
+  const findSale = await getById(saleId);
+  if (findSale.error) return findSale;
+
   return SalesModel.putSale(saleId, body);
     // ajuda do Paulo Sordi
 };

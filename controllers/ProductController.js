@@ -29,10 +29,11 @@ const putProduct = async (req, res, next) => {
   const { id } = req.params;
   const { name, quantity } = req.body;
 
-  const findProduct = await ProductService.getById(id);
-  if (findProduct.error) return next(findProduct.error);
+  // const findProduct = await ProductService.getById(id);
+  // if (findProduct.error) return next(findProduct.error);
 
   const editedProduct = await ProductService.putProduct(id, name, quantity);
+  console.log('controller/ produto atualizado:', editedProduct);
   if (editedProduct.error) return next(editedProduct.error);
 
   return res.status(200).json(editedProduct);
