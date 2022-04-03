@@ -164,7 +164,7 @@ describe('ServiceTests: Insere um novo produto no BD', () => {
 // put product
 
 // delete product
-describe('ServiceTests: Deleta um produto no BD', () => {
+/* describe('ServiceTests: Deleta um produto no BD', () => {
   describe('quando tem sucesso', async () => {
 
     beforeEach(async () => {
@@ -189,4 +189,4 @@ describe('ServiceTests: Deleta um produto no BD', () => {
       expect(Object.keys(response)).contain("error");
    });
   });
-});
+}); */
