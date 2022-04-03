@@ -5,7 +5,6 @@ const ProductModel = require('../../../models/ProductModel')
 
 // get All
 describe('ModelTest - Products: Busca todos os produtos no BD', () => {
-
   const expectResult = [
   {
     id: 1,

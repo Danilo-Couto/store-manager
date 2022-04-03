@@ -57,7 +57,8 @@ const deleteSale = async (saleId) => {
   const existingSale = await getById(saleId); // procura o paramentro
   if (existingSale.error) return existingSale.error;
 
-  await SalesModel.deleteSale(saleId);
+  const deletedSale = await SalesModel.deleteSale(saleId);
+  return deletedSale;
 };
 
 module.exports = {

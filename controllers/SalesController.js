@@ -33,7 +33,9 @@ const deleteSale = async (req, res, next) => {
   const { saleId } = req.params;
   const findSaleId = await SalesService.getById(saleId); // procura o paramentro
   if (findSaleId.error) return next(findSaleId.error);
+
   await SalesModel.deleteSale(saleId); // direto para Model
+
   return res.status(204).end();
 };
 

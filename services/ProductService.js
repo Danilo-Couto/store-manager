@@ -7,7 +7,6 @@ const alreadyExists = { error: { code: 'alreadyExists', message: 'Product alread
 const getAll = async () => ProductModel.getAll();
 
 const getById = async (id) => {
-  console.log('entrou:', id);
   if (!id) return invalidData;
 
   const product = await ProductModel.getById(id);
@@ -27,6 +26,7 @@ const postProduct = async (name, quantity) => {
   if (error) return ({ error });
 
   const existingProduct = await ProductModel.getByName(name);
+
   if (existingProduct) return alreadyExists; // mudei aqui
 
   return ProductModel.postProduct(name, quantity);
@@ -42,29 +42,27 @@ const putProduct = async (id, name, quantity) => {
      quantity: JOI.number().integer().min(1).not()
        .empty()
        .required(),
- }).validate({ id, name, quantity }); // inclui id
+ }).validate({ id, name, quantity });
+
  if (error) return ({ error });
 
  const findProduct = await getById(id);
  if (findProduct.error) return findProduct;
 
- console.log('produto encontrado:', findProduct);
-
- const result = await ProductModel.putProduct(id, name, quantity);
- console.log('produto atualizado:', result);
-
- return result;
+ const editedProduct = await ProductModel.putProduct(id, name, quantity);
+ return editedProduct;
 };
 
 const deleteProduct = async (id) => {
   if (!id) return invalidData;
 
   const existingProduct = await getById(id);
+
   if (existingProduct.error) return existingProduct;
 
-  const result = ProductModel.deleteProduct(id); // mudei aqui
+  const deletedProduct = ProductModel.deleteProduct(id); // mudei aqui
 
-  return result;
+  return deletedProduct;
 };
 
 module.exports = {
