@@ -32,7 +32,7 @@ describe("10-deleteSales", () => {
     await connection.execute("DROP DATABASE StoreManager");
     await connection.end();
   });
- 
+
   describe("10 - Crie um endpoint para deletar uma venda", () => {
     it("Será validado que não é possível deletar uma venda que não existe", async () => {
       await frisby
@@ -40,7 +40,7 @@ describe("10-deleteSales", () => {
         .expect("status", 404)
         .then((response) => {
           const { json } = response;
-  
+
           expect(Object.keys(json)).toContain("message");
           expect(json.message).toEqual("Sale not found");
         });
@@ -56,7 +56,7 @@ describe("10-deleteSales", () => {
         .expect("status", 404)
         .then((response) => {
           const { json } = response;
-  
+
           expect(Object.keys(json)).toContain("message");
           expect(json.message).toEqual("Sale not found");
         });

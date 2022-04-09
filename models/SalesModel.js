@@ -1,4 +1,5 @@
 const connection = require('./connection');
+const ProductModel = require('./ProductModel');
 
 const getAll = async () => {
   const query = `SELECT sp.sale_id AS saleId,
@@ -30,19 +31,22 @@ const getById = async (saleId) => {
   return result;
 };
 
+// create sale
 const postSale = async (soldItems) => {
   const [sale] = await connection.execute('INSERT INTO StoreManager.sales (id) VALUES (null)');
 
   const querySaleAndProducts = `INSERT INTO StoreManager
     .sales_products (sale_id, product_id, quantity) VALUES (?,?,?)`;
 
-  soldItems.forEach(async (item) => {
+  await Promise.all(soldItems.map(async (item) => {
   await connection.execute(querySaleAndProducts, [sale.insertId, item.productId, item.quantity]);
-  });
+  await ProductModel.putProductAfterSale('create', item.productId, item.quantity);
+  }));
 
   return { id: sale.insertId, itemsSold: soldItems };
 };
 
+// edit sale
 const putSale = async (saleId, body) => {
   const { productId, quantity } = body;
   const query = `UPDATE StoreManager
@@ -54,6 +58,12 @@ const putSale = async (saleId, body) => {
   };
 
 const deleteSale = async (saleId) => {
+  const productObj = await getById(saleId);
+
+  await Promise.all(productObj.map(async (item) => {
+    ProductModel.putProductAfterSale('del', item.productId, item.quantity);
+}));
+
   const query = 'DELETE FROM StoreManager.sales_products WHERE sale_id = ?';
   const result = await connection.execute(query, [saleId]);
   return result;

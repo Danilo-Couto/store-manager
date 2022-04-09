@@ -42,6 +42,19 @@ const result = await getById(id);
 return result;
 };
 
+const putProductAfterSale = async (funcao, id, qntSold) => {
+  const productObj = await getById(id);
+
+  if (funcao === 'create') {
+    productObj.quantity -= await qntSold;
+  } else {
+    productObj.quantity += await qntSold;
+  }
+  const query = 'UPDATE StoreManager.products SET name = ?, quantity = ? WHERE id = ? ';
+
+  await connection.execute(query, [productObj.name, productObj.quantity, id]);
+};
+
 const deleteProduct = async (id) => {
   const query = 'DELETE FROM StoreManager.products WHERE id = ?';
   const result = await connection.execute(query, [id]);
@@ -55,4 +68,5 @@ module.exports = {
   postProduct,
   putProduct,
   deleteProduct,
+  putProductAfterSale,
 };

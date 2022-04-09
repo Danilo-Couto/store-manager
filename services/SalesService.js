@@ -1,37 +1,45 @@
 const JOI = require('joi');
 const SalesModel = require('../models/SalesModel');
+const ProductModel = require('../models/ProductModel');
 
 const invalidData = { error: { code: 'invalidData', message: 'Sale not found' } };
 
 const getAll = async () => SalesModel.getAll();
 
 const getById = async (saleId) => {
-  if (!saleId) return invalidData;
-
   const sale = await SalesModel.getById(saleId);
   if (!sale) return invalidData;
 
   return sale;
 };
 
-const erro = JOI.object({
-  productId: JOI.number().integer().not()
-  .empty()
-  .min(1)
-  .required(),
-  quantity: JOI.number().integer().not()
-  .empty()
-  .min(1)
-  .required(),
-});
+const productsInStock = async (productId) => {
+  const productObj = await ProductModel.getById(productId);
+  return productObj.quantity;
+};
+
+const stockValidation = async (productId) => {
+  const max = await productsInStock(productId);
+  const constante = JOI.object({
+     quantity: JOI.number()
+    .max(max)
+    .messages({
+      'number.max': 'Such amount is not permitted to sell',
+    }),
+  });
+  return constante;
+};
 
 const postSale = async (body) => {
   let hasError = null;
 
-  body.forEach(({ productId, quantity }) => {
-    const { error } = erro.validate({ productId, quantity });
+  await Promise.all(body.map(async ({ productId, quantity }) => {
+    const schema = await stockValidation(productId);
+    const { error } = schema.validate({ quantity });
+
     if (error) hasError = error;
-});
+  }));
+
   if (hasError) return { hasError };
 
   return SalesModel.postSale(body);
@@ -39,12 +47,8 @@ const postSale = async (body) => {
 };
 
 const putSale = async (saleId, body) => {
-  if (!saleId) return invalidData;
-
-  const { error } = erro.validate(body);
-  if (error) return { error };
-
   const findSale = await getById(saleId);
+
   if (findSale.error) return findSale;
 
   return SalesModel.putSale(saleId, body);
@@ -52,9 +56,7 @@ const putSale = async (saleId, body) => {
 };
 
 const deleteSale = async (saleId) => {
-  if (!saleId) return invalidData;
-
-  const existingSale = await getById(saleId); // procura o paramentro
+  const existingSale = await getById(saleId);
   if (existingSale.error) return existingSale.error;
 
   const deletedSale = await SalesModel.deleteSale(saleId);

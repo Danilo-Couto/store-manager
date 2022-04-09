@@ -29,7 +29,6 @@ const putProduct = async (req, res, next) => {
   const { name, quantity } = req.body;
 
   const editedProduct = await ProductService.putProduct(id, name, quantity);
-  // console.log('controller/ produto retornado:', editedProduct);
   if (editedProduct.error) return next(editedProduct.error);
 
   return res.status(200).json(editedProduct);

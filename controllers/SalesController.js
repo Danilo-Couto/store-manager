@@ -7,8 +7,8 @@ const getAll = async (_req, res) => {
 };
 
 const getById = async (req, res, next) => {
-  const { saleId } = req.params;
-  const sale = await SalesService.getById(saleId);
+  const { id } = req.params;
+  const sale = await SalesService.getById(id);
   if (sale.error) return next(sale.error);
   return res.status(200).json(sale);
 };
@@ -20,21 +20,21 @@ const postSale = async (req, res, next) => {
 };
 
 const putSale = async (req, res, next) => {
-  const { saleId } = req.params;
+  const { id } = req.params;
   const [{ productId, quantity }] = req.body;
 
-  const editedSale = await SalesService.putSale(saleId, { productId, quantity });
+  const editedSale = await SalesService.putSale(id, { productId, quantity });
   if (editedSale.error) return next(editedSale.error);
 
   return res.status(200).json(editedSale);
   };
 
 const deleteSale = async (req, res, next) => {
-  const { saleId } = req.params;
-  const findSaleId = await SalesService.getById(saleId); // procura o paramentro
+  const { id } = req.params;
+  const findSaleId = await SalesService.getById(id); // procura o parametro
   if (findSaleId.error) return next(findSaleId.error);
 
-  await SalesModel.deleteSale(saleId); // direto para Model
+  await SalesModel.deleteSale(id); // direto para Model
 
   return res.status(204).end();
 };
