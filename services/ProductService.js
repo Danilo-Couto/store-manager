@@ -1,4 +1,3 @@
-// const JOI = require('joi');
 const ProductModel = require('../models/ProductModel');
 
 const invalidData = { error: { code: 'invalidData', message: 'Product not found' } }; // estava sale not found
@@ -21,7 +20,6 @@ const postProduct = async (name, quantity) => {
 };
 
 const putProduct = async (id, name, quantity) => {
-
  const findProduct = await getById(id);
  if (findProduct.error) return findProduct;
 

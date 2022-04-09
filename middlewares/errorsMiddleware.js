@@ -1,7 +1,7 @@
 module.exports = (err, _req, res, _next) => {
-
   if (err.isJoi) {
-    const newStatus = err.details[0].type.includes('.min') || err.details[0].type.includes('.max') ? 422 : 400;
+    const newStatus = err.details[0].type.includes('.min')
+    || err.details[0].type.includes('.max') ? 422 : 400;
     return res.status(newStatus)
       .json({ message: err.details[0].message });
   }

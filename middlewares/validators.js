@@ -26,14 +26,6 @@ const createProductValidation = (req, _res, next) => {
   next();
 };
 
-const editProductValidation = (req, _res, next) => {
-  const { name, quantity } = req.body;
-  const { error } = scheme.validate({ name, quantity });
-
-  if (error) throw error;
-  next();
-};
-
 const erro = JOI.object({
   productId: JOI.number().integer().not()
   .empty()
@@ -54,6 +46,7 @@ const createSaleValidation = (req, _res, next) => {
     // const schema = await saleValidation(productId);
     const { error } = erro.validate({ productId, quantity });
     if (error) hasError = error;
+    return null;
   }));
   if (hasError) throw hasError;
 
@@ -63,6 +56,5 @@ const createSaleValidation = (req, _res, next) => {
 module.exports = {
   idValidation,
   createProductValidation,
-  editProductValidation,
   createSaleValidation,
 };
