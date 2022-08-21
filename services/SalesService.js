@@ -9,7 +9,6 @@ const getAll = async () => SalesModel.getAll();
 const getById = async (saleId) => {
   const sale = await SalesModel.getById(saleId);
   if (!sale) return invalidData;
-
   return sale;
 };
 
@@ -39,7 +38,6 @@ const postSale = async (body) => {
 
     if (error) hasError = error;
   }));
-
   if (hasError) return { hasError };
 
   return SalesModel.postSale(body);
@@ -48,9 +46,7 @@ const postSale = async (body) => {
 
 const putSale = async (saleId, body) => {
   const findSale = await getById(saleId);
-
   if (findSale.error) return findSale;
-
   return SalesModel.putSale(saleId, body);
     // ajuda do Paulo Sordi
 };
